@@ -4,6 +4,7 @@ import {
 	TLFrameShape,
 	TLImageShape,
 	TLPageId,
+	tlenv,
 	useEditor,
 	useValue,
 } from '@tldraw/editor'
@@ -241,7 +242,13 @@ export function CopyAsMenuGroup() {
 			disabled={!atLeastOneShapeOnPage}
 		>
 			<TldrawUiMenuGroup id="copy-as-group">
-				<TldrawUiMenuActionItem actionId="copy-as-svg" />
+				{
+					// sadly copy-as-svg doesn't work in chromium because
+					// it strips out the custom embedded fonts
+					// so we could enable this if the selected shapes don't have any text
+					// but that's a bit too much work for now
+					(tlenv.isSafari || tlenv.isFirefox) && <TldrawUiMenuActionItem actionId="copy-as-svg" />
+				}
 				{Boolean(window.navigator.clipboard?.write) && (
 					<TldrawUiMenuActionItem actionId="copy-as-png" />
 				)}

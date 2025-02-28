@@ -17,6 +17,7 @@ import {
 	compact,
 	createShapeId,
 	openWindow,
+	tlenv,
 	useEditor,
 } from '@tldraw/editor'
 import * as React from 'react'
@@ -226,7 +227,7 @@ export function ActionsProvider({ overrides, children }: ActionsProviderProps) {
 					menu: 'action.copy-as-svg.short',
 					['context-menu']: 'action.copy-as-svg.short',
 				},
-				kbd: '$!c',
+				kbd: tlenv.isSafari || tlenv.isFirefox ? '$!c' : undefined,
 				readonlyOk: true,
 				onSelect(source) {
 					let ids = editor.getSelectedShapeIds()
